@@ -1,0 +1,314 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parents on Online Gaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Source+Serif+4:wght@400&display=swap" rel="stylesheet">
+<style>:root{--font-anthropic-sans:"Libre Franklin",system-ui,sans-serif;--font-anthropic-serif:"Source Serif 4",Georgia,serif;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:16px;--cds-gap-lg:24px;--cds-gap-xl:40px;--cds-pad-xs:4px;--cds-pad-sm:8px;--cds-pad-lg:16px;--cds-radius:8px;
+--cds-font-size-caption:.8125rem;--cds-font-size-body:.9375rem;--cds-font-size-heading:1.25rem;--cds-font-size-title:clamp(1.6rem,5vw,2.25rem);--cds-font-weight-medium:500;--cds-dur-slow:.25s;
+--color-bg:#faf9f5;--color-fg:#1f1e1d;--color-fg-muted:#6b6862;--color-panel:#ffffff;--color-border-line:#e4e1d8;--color-bad:#c0392b;
+--cds-chart-muted:#c9c5bb;--cds-surface-popover:#ffffff;--cds-border:#e4e1d8;--cds-text-secondary:#6b6862;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#1c1b19;--color-fg:#ecebe6;--color-fg-muted:#a29f97;--color-panel:#262522;--color-border-line:#3a3834;
+--cds-chart-muted:#55524b;--cds-surface-popover:#2e2c29;--cds-border:#3a3834;--cds-text-secondary:#a29f97;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5)}}
+:root[data-theme="dark"]{--color-bg:#1c1b19;--color-fg:#ecebe6;--color-fg-muted:#a29f97;--color-panel:#262522;--color-border-line:#3a3834;--cds-chart-muted:#55524b;--cds-surface-popover:#2e2c29;--cds-border:#3a3834;--cds-text-secondary:#a29f97}
+*{box-sizing:border-box} html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans)}
+body{padding:16px} main{display:block}
+.sa-top{max-width:76rem;margin:0 auto 12px;font-size:.875rem}.sa-top a{color:var(--color-fg-muted);text-decoration:none}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script id="csv-counts" type="text/plain">qid,section,question,answer,ord,grp,count
+q01,Play,Does your kid/s play online games?,Yes,0,Yes,45
+q01,Play,Does your kid/s play online games?,Sometimes,1,Sometimes,22
+q01,Play,Does your kid/s play online games?,No,2,No,33
+q02,Games,Games kids play (respondents naming each),Candy Crush,0,Candy Crush,13
+q02,Games,Games kids play (respondents naming each),PUBG,1,PUBG,13
+q02,Games,Games kids play (respondents naming each),Among Us,2,Among Us,8
+q02,Games,Games kids play (respondents naming each),Free Fire,3,Free Fire,7
+q02,Games,Games kids play (respondents naming each),Minecraft,4,Minecraft,5
+q02,Games,Games kids play (respondents naming each),Call of Duty,5,Call of Duty,5
+q02,Games,Games kids play (respondents naming each),Counter-Strike,6,Counter-Strike,4
+q02,Games,Games kids play (respondents naming each),Clash of Clans,7,Clash of Clans,4
+q02,Games,Games kids play (respondents naming each),Other games,8,Other games,28
+q02,Games,Games kids play (respondents naming each),Don't know,9,Don't know,6
+q03,Attitudes,Online Gaming can be beneficial to kids,Strongly Agree,0,agree,4
+q03,Attitudes,Online Gaming can be beneficial to kids,Agree,1,agree,22
+q03,Attitudes,Online Gaming can be beneficial to kids,Neutral,2,neutral,25
+q03,Attitudes,Online Gaming can be beneficial to kids,Disagree,3,disagree,10
+q03,Attitudes,Online Gaming can be beneficial to kids,Strongly Disagree,4,disagree,6
+q04,Attitudes,Online Gaming is a good stress-buster,Strongly Agree,0,agree,6
+q04,Attitudes,Online Gaming is a good stress-buster,Agree,1,agree,31
+q04,Attitudes,Online Gaming is a good stress-buster,Neutral,2,neutral,22
+q04,Attitudes,Online Gaming is a good stress-buster,Disagree,3,disagree,6
+q04,Attitudes,Online Gaming is a good stress-buster,Strongly Disagree,4,disagree,2
+q05,Attitudes,Online Gaming is a good way for kids to socialize,Strongly Agree,0,agree,5
+q05,Attitudes,Online Gaming is a good way for kids to socialize,Agree,1,agree,14
+q05,Attitudes,Online Gaming is a good way for kids to socialize,Neutral,2,neutral,17
+q05,Attitudes,Online Gaming is a good way for kids to socialize,Disagree,3,disagree,20
+q05,Attitudes,Online Gaming is a good way for kids to socialize,Strongly Disagree,4,disagree,11
+q06,Attitudes,Online Gaming can be a profitable career for kids,Strongly Agree,0,agree,4
+q06,Attitudes,Online Gaming can be a profitable career for kids,Agree,1,agree,16
+q06,Attitudes,Online Gaming can be a profitable career for kids,Neutral,2,neutral,17
+q06,Attitudes,Online Gaming can be a profitable career for kids,Disagree,3,disagree,20
+q06,Attitudes,Online Gaming can be a profitable career for kids,Strongly Disagree,4,disagree,10
+q07,Attitudes,Online Gaming requires parental supervision,Strongly Agree,0,agree,26
+q07,Attitudes,Online Gaming requires parental supervision,Agree,1,agree,22
+q07,Attitudes,Online Gaming requires parental supervision,Neutral,2,neutral,13
+q07,Attitudes,Online Gaming requires parental supervision,Disagree,3,disagree,4
+q07,Attitudes,Online Gaming requires parental supervision,Strongly Disagree,4,disagree,2
+q08,Attitudes,Online Gaming can be a distraction,Strongly Agree,0,agree,26
+q08,Attitudes,Online Gaming can be a distraction,Agree,1,agree,32
+q08,Attitudes,Online Gaming can be a distraction,Neutral,2,neutral,4
+q08,Attitudes,Online Gaming can be a distraction,Disagree,3,disagree,4
+q08,Attitudes,Online Gaming can be a distraction,Strongly Disagree,4,disagree,1
+q09,Attitudes,Online Games are violent in nature,Strongly Agree,0,agree,14
+q09,Attitudes,Online Games are violent in nature,Agree,1,agree,17
+q09,Attitudes,Online Games are violent in nature,Neutral,2,neutral,29
+q09,Attitudes,Online Games are violent in nature,Disagree,3,disagree,5
+q09,Attitudes,Online Games are violent in nature,Strongly Disagree,4,disagree,2
+q10,Attitudes,Online Gaming can have dangerous consequences,Strongly Agree,0,agree,16
+q10,Attitudes,Online Gaming can have dangerous consequences,Agree,1,agree,29
+q10,Attitudes,Online Gaming can have dangerous consequences,Neutral,2,neutral,13
+q10,Attitudes,Online Gaming can have dangerous consequences,Disagree,3,disagree,6
+q10,Attitudes,Online Gaming can have dangerous consequences,Strongly Disagree,4,disagree,3
+q11,Attitudes,Online Gaming is a waste of money,Strongly Agree,0,agree,10
+q11,Attitudes,Online Gaming is a waste of money,Agree,1,agree,17
+q11,Attitudes,Online Gaming is a waste of money,Neutral,2,neutral,24
+q11,Attitudes,Online Gaming is a waste of money,Disagree,3,disagree,14
+q11,Attitudes,Online Gaming is a waste of money,Strongly Disagree,4,disagree,2
+q12,Fears,Online Games can be addictive,High fear,0,high,38
+q12,Fears,Online Games can be addictive,Medium fear,1,medium,25
+q12,Fears,Online Games can be addictive,Low fear,2,low,4
+q13,Fears,Online Games can cause violent/aggressive behaviour,High fear,0,high,21
+q13,Fears,Online Games can cause violent/aggressive behaviour,Medium fear,1,medium,32
+q13,Fears,Online Games can cause violent/aggressive behaviour,Low fear,2,low,9
+q13,Fears,Online Games can cause violent/aggressive behaviour,No fear,3,low,5
+q14,Fears,Online Games exposes kids to age-inappropriate content,High fear,0,high,27
+q14,Fears,Online Games exposes kids to age-inappropriate content,Medium fear,1,medium,32
+q14,Fears,Online Games exposes kids to age-inappropriate content,Low fear,2,low,8
+q15,Fears,Online Games can affect academic performance,High fear,0,high,35
+q15,Fears,Online Games can affect academic performance,Medium fear,1,medium,26
+q15,Fears,Online Games can affect academic performance,Low fear,2,low,4
+q15,Fears,Online Games can affect academic performance,No fear,3,low,2
+q16,Fears,Online Games can have adverse health affects,High fear,0,high,28
+q16,Fears,Online Games can have adverse health affects,Medium fear,1,medium,28
+q16,Fears,Online Games can have adverse health affects,Low fear,2,low,8
+q16,Fears,Online Games can have adverse health affects,No fear,3,low,3
+q17,Role,I have played Online Games myself,True,0,true,41
+q17,Role,I have played Online Games myself,False,1,false,26
+q18,Role,I know my kids' favorite Online Games,True,0,true,47
+q18,Role,I know my kids' favorite Online Games,False,1,false,20
+q19,Role,I understand why my kids play Online Games,True,0,true,53
+q19,Role,I understand why my kids play Online Games,False,1,false,14
+q20,Role,I have sometimes played Online Games with my kids,True,0,true,32
+q20,Role,I have sometimes played Online Games with my kids,False,1,false,35
+q21,Role,I am not interested in playing/learning about Online Games,True,0,true,35
+q21,Role,I am not interested in playing/learning about Online Games,False,1,false,32
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,True,0,true,65
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,False,1,false,2
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,True,0,true,25
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,False,1,false,39
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,True,0,true,34
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,False,1,false,32
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),True,0,true,35
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),False,1,false,31
+q26,Rules,I do not allow my kid/s to play Online Games during exams,True,0,true,35
+q26,Rules,I do not allow my kid/s to play Online Games during exams,False,1,false,31
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,True,0,true,40
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,False,1,false,26
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,True,0,true,32
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,False,1,false,32
+q29,Rules,I have no rules whatsoever,True,0,true,20
+q29,Rules,I have no rules whatsoever,False,1,false,45
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,High Impact,0,highmed,15
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,Medium Impact,1,highmed,27
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,Low Impact,2,lowno,19
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,No Impact,3,lowno,6
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,High Impact,0,highmed,14
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,Medium Impact,1,highmed,23
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,Low Impact,2,lowno,20
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,No Impact,3,lowno,10
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,High Impact,0,highmed,15
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,Medium Impact,1,highmed,21
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,Low Impact,2,lowno,18
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,No Impact,3,lowno,13
+q33,About,What is your income level? (per annum),"Less than ₹70,000",0,"Less than ₹70,000",12
+q33,About,What is your income level? (per annum),"Between ₹70,000 and ₹2,70,000",1,"Between ₹70,000 and ₹2,70,000",23
+q33,About,What is your income level? (per annum),"Between ₹2,70,000 and ₹8,45,000",2,"Between ₹2,70,000 and ₹8,45,000",18
+q33,About,What is your income level? (per annum),"More than ₹8,45,000",3,"More than ₹8,45,000",14
+q34,About,What age group are your kid/s in?,Infants/Toddlers (0-3 years old),0,Infants/Toddlers (0-3 years old),1
+q34,About,What age group are your kid/s in?,Pre-school (4-5 years old),1,Pre-school (4-5 years old),8
+q34,About,What age group are your kid/s in?,School Age (6-12 years old),2,School Age (6-12 years old),25
+q34,About,What age group are your kid/s in?,Adolescents (13-17 years old),3,Adolescents (13-17 years old),10
+q34,About,What age group are your kid/s in?,Adults (18 years and above),4,Adults (18 years and above),23
+q35,About,What is your gender?,Female,0,Female,43
+q35,About,What is your gender?,Male,1,Male,24
+q36,About,What is your occupation?,Working Professional,0,Working Professional,28
+q36,About,What is your occupation?,Housewife,1,Housewife,12
+q36,About,What is your occupation?,Entrepreneur,2,Entrepreneur,10
+q36,About,What is your occupation?,Retiree,3,Retiree,9
+q36,About,What is your occupation?,Unemployed,4,Unemployed,6
+q36,About,What is your occupation?,Teacher,5,Teacher,2
+q37,About,Which city do you live in?,Other,0,Other,19
+q37,About,Which city do you live in?,Kolkata,1,Kolkata,17
+q37,About,Which city do you live in?,Bangalore,2,Bangalore,14
+q37,About,Which city do you live in?,Delhi,3,Delhi,6
+q37,About,Which city do you live in?,Mumbai,4,Mumbai,5
+q37,About,Which city do you live in?,Hyderabad,5,Hyderabad,3
+q37,About,Which city do you live in?,Chennai,6,Chennai,2
+q37,About,Which city do you live in?,Pune,7,Pune,1
+</script>
+<script>window.dash=(function(){const raw={},calcs={},draws={};
+const dark=matchMedia('(prefers-color-scheme: dark)');
+const L=['#2b6cb0','#d9822b','#2f9e6b','#b8428c','#7e5bc4','#b89a1e','#3a9fc0','#c94a4a'];
+const D=['#5b9be0','#f0a05a','#4fc28c','#e070b4','#a488ea','#d9bd40','#62c0de','#ec7070'];
+const api={get colors(){return dark.matches?D:L},
+setLink(id){try{history.replaceState(null,'','#'+id)}catch(e){}},
+calc(name,o){calcs[name]=o},
+data(name){if(name in calcs){const o=calcs[name];try{return{status:'ok',data:o.fn(...o.inputs.map(i=>api.data(i).data))}}catch(e){return{status:'error'}}}
+ if(!(name in raw)){const s=document.getElementById('csv-'+name);raw[name]=s?d3.csvParse(s.textContent.trim()):null}
+ return raw[name]?{status:'ok',data:raw[name]}:{status:'error'}},
+draw(name,fn){draws[name]=fn},
+_run(){const go=()=>{for(const [n,fn] of Object.entries(draws))document.querySelectorAll('[data-draw="'+n+'"]').forEach(el=>{try{fn(el)}catch(e){console.error(e)}})};
+ go();let w=innerWidth,t;addEventListener('resize',()=>{if(innerWidth===w)return;w=innerWidth;clearTimeout(t);t=setTimeout(go,150)});dark.addEventListener('change',go)}};
+return api})();
+</script>
+</head><body><nav class="sa-top"><a href="./">← All charts</a></nav><main>
+<style>
+.yd-wrap{max-width:76rem;margin-inline:auto;display:flex;flex-direction:column;gap:var(--cds-gap-xl);font-family:var(--font-anthropic-sans);color:var(--color-fg)}
+.yd-head{display:flex;flex-direction:column;gap:var(--cds-gap-sm)}
+.yd-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0;text-wrap:balance}
+.yd-sub{margin:0;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.yd-take{margin:0;font-size:var(--cds-font-size-body);max-width:65ch;line-height:1.55}
+.yd-wrap b{font-weight:600}
+.yd-nav{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md);font-size:var(--cds-font-size-caption)}
+.yd-navlink{color:var(--color-fg-muted);text-decoration:none;border-bottom:1px solid var(--color-border-line)}
+.yd-navlink:hover,.yd-navlink:focus-visible{color:var(--color-fg)}
+.yd-sec{display:flex;flex-direction:column;gap:var(--cds-gap-md);scroll-margin-top:var(--cds-gap-lg)}
+.yd-h2{margin:0;font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium)}
+.yd-lede{margin:0;max-width:65ch;line-height:1.55;color:var(--color-fg)}
+.yd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--cds-gap-md)}
+.yd-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-width:0}
+.yd-q{margin:0;font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);text-wrap:balance}
+.yd-note{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.yd-pie{position:relative;min-height:10.5rem}
+.yd-pie-in{display:flex;gap:var(--cds-gap-md);align-items:center}
+.yd-pie-in.yd-stack{flex-direction:column;align-items:stretch}
+.yd-pie-in.yd-stack svg{align-self:center}
+.yd-leg{display:grid;grid-template-columns:auto 1fr auto auto;gap:var(--cds-gap-xs) var(--cds-gap-sm);align-items:baseline;font-size:var(--cds-font-size-caption);flex:1;min-width:0}
+.yd-sw{width:.625rem;height:.625rem;border-radius:2px;display:inline-block;transform:translateY(1px)}
+.yd-lab{min-width:0;overflow-wrap:anywhere}
+.yd-num{font-variant-numeric:tabular-nums;text-align:right;color:var(--color-fg-muted)}
+.yd-pct{font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.yd-row-dim{opacity:.4}
+.yd-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);white-space:nowrap;z-index:2}
+.yd-tip-k{color:var(--cds-text-secondary)}
+.yd-fail{display:flex;align-items:center;justify-content:center;gap:var(--cds-gap-xs);min-height:10.5rem;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.yd-dot{width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+[data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+.yd-foot{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);max-width:65ch}
+.yd-foot summary{cursor:pointer}
+.yd-foot dl{display:grid;grid-template-columns:auto 1fr;gap:var(--cds-gap-xs) var(--cds-gap-md)}
+.yd-foot dt{color:var(--color-fg)}
+.yd-foot dd{margin:0}
+</style>
+<div class="yd-wrap">
+<header class="yd-head">
+<h1 class="yd-title">Parents on online gaming</h1>
+<p class="yd-sub">Yourdost parent survey · 100 responses · December 2020</p>
+<p class="yd-take">Parents mostly see online gaming as a distraction that needs rules: <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q08&amp;grp=agree">—</span>%</b> agree it is a distraction and <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q22&amp;grp=true">—</span>%</b> say rules are necessary, yet <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q29&amp;grp=true">—</span>%</b> have no rules at all.</p>
+<nav class="yd-nav" aria-label="Sections"><a class="yd-navlink" href="#play">Who plays</a><a class="yd-navlink" href="#attitudes">What parents think of online gaming</a><a class="yd-navlink" href="#fears">What parents fear</a><a class="yd-navlink" href="#role">The parent’s own role</a><a class="yd-navlink" href="#rules">Rules at home</a><a class="yd-navlink" href="#impact">Impact on the family</a><a class="yd-navlink" href="#about">About the respondents</a></nav>
+</header>
+<section class="yd-sec" id="play"><h2 class="yd-h2">Who plays</h2><p class="yd-lede"><b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q01&amp;grp=Yes">—</span>%</b> of parents say their kids play online games and <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q01&amp;grp=Sometimes">—</span>%</b> say sometimes. Only these parents answered the rest of the survey, so every chart below counts them alone.</p><div class="yd-grid"><article class="yd-card" id="q01"><h3 class="yd-q">Does your kid play online games?</h3><div class="yd-pie" data-draw="pie" data-q="q01" data-source="counts"></div></article><article class="yd-card" id="q02"><h3 class="yd-q">Which games do they play?</h3><p class="yd-note">Share of mentions. A parent can name several games; games named by fewer than 4 parents are in Other games.</p><div class="yd-pie" data-draw="pie" data-q="q02" data-source="counts"></div></article></div></section><section class="yd-sec" id="attitudes"><h2 class="yd-h2">What parents think of online gaming</h2><p class="yd-lede">Most agree gaming is a distraction (<b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q08&amp;grp=agree">—</span>%</b>) and needs parental supervision (<b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q07&amp;grp=agree">—</span>%</b>). Views on its benefits are split: <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q04&amp;grp=agree">—</span>%</b> call it a good stress-buster, but <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q05&amp;grp=disagree">—</span>%</b> disagree that it helps kids socialize.</p><div class="yd-grid"><article class="yd-card" id="q03"><h3 class="yd-q">Online Gaming can be beneficial to kids</h3><div class="yd-pie" data-draw="pie" data-q="q03" data-source="counts"></div></article><article class="yd-card" id="q04"><h3 class="yd-q">Online Gaming is a good stress-buster</h3><div class="yd-pie" data-draw="pie" data-q="q04" data-source="counts"></div></article><article class="yd-card" id="q05"><h3 class="yd-q">Online Gaming is a good way for kids to socialize</h3><div class="yd-pie" data-draw="pie" data-q="q05" data-source="counts"></div></article><article class="yd-card" id="q06"><h3 class="yd-q">Online Gaming can be a profitable career for kids</h3><div class="yd-pie" data-draw="pie" data-q="q06" data-source="counts"></div></article><article class="yd-card" id="q07"><h3 class="yd-q">Online Gaming requires parental supervision</h3><div class="yd-pie" data-draw="pie" data-q="q07" data-source="counts"></div></article><article class="yd-card" id="q08"><h3 class="yd-q">Online Gaming can be a distraction</h3><div class="yd-pie" data-draw="pie" data-q="q08" data-source="counts"></div></article><article class="yd-card" id="q09"><h3 class="yd-q">Online Games are violent in nature</h3><div class="yd-pie" data-draw="pie" data-q="q09" data-source="counts"></div></article><article class="yd-card" id="q10"><h3 class="yd-q">Online Gaming can have dangerous consequences</h3><div class="yd-pie" data-draw="pie" data-q="q10" data-source="counts"></div></article><article class="yd-card" id="q11"><h3 class="yd-q">Online Gaming is a waste of money</h3><div class="yd-pie" data-draw="pie" data-q="q11" data-source="counts"></div></article></div></section><section class="yd-sec" id="fears"><h2 class="yd-h2">What parents fear</h2><p class="yd-lede">Addiction and school results worry parents most: <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q12&amp;grp=high">—</span>%</b> hold high fear of addiction and <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q15&amp;grp=high">—</span>%</b> of a drop in academic performance.</p><div class="yd-grid"><article class="yd-card" id="q12"><h3 class="yd-q">Online Games can be addictive</h3><div class="yd-pie" data-draw="pie" data-q="q12" data-source="counts"></div></article><article class="yd-card" id="q13"><h3 class="yd-q">Online Games can cause violent/aggressive behaviour</h3><div class="yd-pie" data-draw="pie" data-q="q13" data-source="counts"></div></article><article class="yd-card" id="q14"><h3 class="yd-q">Online Games exposes kids to age-inappropriate content</h3><div class="yd-pie" data-draw="pie" data-q="q14" data-source="counts"></div></article><article class="yd-card" id="q15"><h3 class="yd-q">Online Games can affect academic performance</h3><div class="yd-pie" data-draw="pie" data-q="q15" data-source="counts"></div></article><article class="yd-card" id="q16"><h3 class="yd-q">Online Games can have adverse health affects</h3><div class="yd-pie" data-draw="pie" data-q="q16" data-source="counts"></div></article></div></section><section class="yd-sec" id="role"><h2 class="yd-h2">The parent’s own role</h2><p class="yd-lede"><b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q17&amp;grp=true">—</span>%</b> have played online games themselves, but <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q20&amp;grp=true">—</span>%</b> have played with their kids, and <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q21&amp;grp=true">—</span>%</b> say they are not interested in learning about them.</p><div class="yd-grid"><article class="yd-card" id="q17"><h3 class="yd-q">I have played Online Games myself</h3><div class="yd-pie" data-draw="pie" data-q="q17" data-source="counts"></div></article><article class="yd-card" id="q18"><h3 class="yd-q">I know my kids&#x27; favorite Online Games</h3><div class="yd-pie" data-draw="pie" data-q="q18" data-source="counts"></div></article><article class="yd-card" id="q19"><h3 class="yd-q">I understand why my kids play Online Games</h3><div class="yd-pie" data-draw="pie" data-q="q19" data-source="counts"></div></article><article class="yd-card" id="q20"><h3 class="yd-q">I have sometimes played Online Games with my kids</h3><div class="yd-pie" data-draw="pie" data-q="q20" data-source="counts"></div></article><article class="yd-card" id="q21"><h3 class="yd-q">I am not interested in playing/learning about Online Games</h3><div class="yd-pie" data-draw="pie" data-q="q21" data-source="counts"></div></article><article class="yd-card" id="q22"><h3 class="yd-q">I think its necessary to place rules for kids&#x27; Online Gaming behaviour</h3><div class="yd-pie" data-draw="pie" data-q="q22" data-source="counts"></div></article></div></section><section class="yd-sec" id="rules"><h2 class="yd-h2">Rules at home</h2><p class="yd-lede"><b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q22&amp;grp=true">—</span>%</b> think rules are necessary, yet <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q29&amp;grp=true">—</span>%</b> have no rules at all. The most common rule limits which games kids may play (<b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q27&amp;grp=true">—</span>%</b>).</p><div class="yd-grid"><article class="yd-card" id="q23"><h3 class="yd-q">I only allow my kid/s to play Online Games on certain days of the week</h3><div class="yd-pie" data-draw="pie" data-q="q23" data-source="counts"></div></article><article class="yd-card" id="q24"><h3 class="yd-q">I only allow my kid/s to play Online Games at certain times of the day</h3><div class="yd-pie" data-draw="pie" data-q="q24" data-source="counts"></div></article><article class="yd-card" id="q25"><h3 class="yd-q">I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour)</h3><div class="yd-pie" data-draw="pie" data-q="q25" data-source="counts"></div></article><article class="yd-card" id="q26"><h3 class="yd-q">I do not allow my kid/s to play Online Games during exams</h3><div class="yd-pie" data-draw="pie" data-q="q26" data-source="counts"></div></article><article class="yd-card" id="q27"><h3 class="yd-q">I only allow my kid/s to play certain kinds of Online Games</h3><div class="yd-pie" data-draw="pie" data-q="q27" data-source="counts"></div></article><article class="yd-card" id="q28"><h3 class="yd-q">I only allow my kid/s to spend a certain amount of money on Online Games</h3><div class="yd-pie" data-draw="pie" data-q="q28" data-source="counts"></div></article><article class="yd-card" id="q29"><h3 class="yd-q">I have no rules whatsoever</h3><div class="yd-pie" data-draw="pie" data-q="q29" data-source="counts"></div></article></div></section><section class="yd-sec" id="impact"><h2 class="yd-h2">Impact on the family</h2><p class="yd-lede"><b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q30&amp;grp=highmed">—</span>%</b> report a high or medium level of frustration in the family because of their kids’ gaming, and <b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q32&amp;grp=highmed">—</span>%</b> a high or medium strain on the parent-child relationship.</p><div class="yd-grid"><article class="yd-card" id="q30"><h3 class="yd-q">Frustrations in the family due to kids&#x27; Online Gaming behavior</h3><div class="yd-pie" data-draw="pie" data-q="q30" data-source="counts"></div></article><article class="yd-card" id="q31"><h3 class="yd-q">Arguments/conflicts in the family due to kids&#x27; Online behavior</h3><div class="yd-pie" data-draw="pie" data-q="q31" data-source="counts"></div></article><article class="yd-card" id="q32"><h3 class="yd-q">Strain in parent-child relationship due to kids&#x27; Online Gaming Behavior</h3><div class="yd-pie" data-draw="pie" data-q="q32" data-source="counts"></div></article></div></section><section class="yd-sec" id="about"><h2 class="yd-h2">About the respondents</h2><p class="yd-lede"><b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q35&amp;grp=Female">—</span>%</b> of respondents are women. Working professionals (<b><span data-draw="share" data-source="shares" data-field="pct" data-where="qid=q36&amp;grp=Working Professional">—</span>%</b>) are the largest group.</p><div class="yd-grid"><article class="yd-card" id="q33"><h3 class="yd-q">Income level (per year)</h3><div class="yd-pie" data-draw="pie" data-q="q33" data-source="counts"></div></article><article class="yd-card" id="q34"><h3 class="yd-q">Age group of kids</h3><div class="yd-pie" data-draw="pie" data-q="q34" data-source="counts"></div></article><article class="yd-card" id="q35"><h3 class="yd-q">Gender</h3><div class="yd-pie" data-draw="pie" data-q="q35" data-source="counts"></div></article><article class="yd-card" id="q36"><h3 class="yd-q">Occupation</h3><div class="yd-pie" data-draw="pie" data-q="q36" data-source="counts"></div></article><article class="yd-card" id="q37"><h3 class="yd-q">City</h3><div class="yd-pie" data-draw="pie" data-q="q37" data-source="counts"></div></article></div></section>
+<details class="yd-foot"><summary>How the charts were counted</summary><dl>
+<dt>Base</dt><dd>Each chart counts the parents who answered that question. Parents who said their kids do not play skipped everything after the first question.</dd>
+<dt>Blanks</dt><dd>Blank answers are left out. A few parents skipped single rule questions, so those charts count slightly fewer people.</dd>
+<dt>Games</dt><dd>Free-text game names were grouped by hand (for example PUBG and Pubjee, Free Fire and Freefire). “Don’t know”, “No idea” and “No” count as Don’t know.</dd>
+<dt>Occupation</dt><dd>“Teacher” and “High school teacher” are counted together as Teacher.</dd>
+</dl></details>
+</div>
+<script>
+const isMuted = (a) => a === 'Other games' || a === "Don't know" || a === 'Other';
+const counted = (rows) => rows.map((r) => ({...r, count: Number(r.count), ord: Number(r.ord)}));
+dash.calc('shares', {
+  inputs: ['counts'],
+  title: 'Share of answers by group',
+  description: 'For each question, the percent of its answers in each answer group (for example Agree plus Strongly agree), rounded to a whole number.',
+  fn: (counts) => {
+    const tot = d3.rollup(counts, (v) => d3.sum(v, (r) => Number(r.count)), (r) => r.qid);
+    const g = d3.rollup(counts, (v) => d3.sum(v, (r) => Number(r.count)), (r) => r.qid, (r) => r.grp);
+    const out = [];
+    for (const [qid, m] of g) for (const [grp, n] of m) out.push({qid, grp, pct: Math.round(100 * n / tot.get(qid))});
+    return out;
+  },
+});
+dash.draw('share', (el) => {
+  const s = dash.data('shares');
+  if (s.status !== 'ok') { el.textContent = '—'; return; }
+  const p = new URLSearchParams(el.dataset.where);
+  const row = s.data.find((r) => r.qid === p.get('qid') && r.grp === p.get('grp'));
+  el.textContent = row ? String(row.pct) : '—';
+});
+dash.draw('pie', (el) => {
+  const c = dash.data('counts');
+  el.classList.toggle('dash-skeleton', c.status === 'loading');
+  el.replaceChildren();
+  if (c.status === 'error' || c.status === 'connect' || c.status === 'declined') {
+    const f = document.createElement('div'); f.className = 'yd-fail';
+    const dot = document.createElement('span'); dot.className = 'yd-dot';
+    const t = document.createElement('span'); t.textContent = 'Failed to load';
+    f.append(dot, t); el.append(f); return;
+  }
+  if (c.status !== 'ok') return;
+  const qid = el.dataset.q;
+  const rows = counted(c.data).filter((r) => r.qid === qid).sort((a, b) => a.ord - b.ord);
+  if (!rows.length) return;
+  const total = d3.sum(rows, (r) => r.count);
+  const colors = dash.colors;
+  let ci = 0;
+  rows.forEach((r) => { r.color = isMuted(r.answer) ? 'var(--cds-chart-muted)' : colors[ci++ % colors.length]; });
+  const pctf = d3.format('.0%');
+  const w = el.clientWidth || 320;
+  const stack = w < 380;
+  const size = 152, R = size / 2, r0 = R * 0.58;
+  const box = document.createElement('div'); box.className = 'yd-pie-in' + (stack ? ' yd-stack' : '');
+  el.append(box);
+  const svg = d3.select(box).append('svg').attr('width', size).attr('height', size).attr('viewBox', `0 0 ${size} ${size}`).style('flex', 'none').style('max-width', '100%');
+  const g = svg.append('g').attr('transform', `translate(${R},${R})`);
+  const arcs = d3.pie().sort(null).value((r) => r.count).padAngle(0.012)(rows);
+  const arc = d3.arc().innerRadius(r0).outerRadius(R - 2);
+  const arcHi = d3.arc().innerRadius(r0).outerRadius(R);
+  const paths = g.selectAll('path').data(arcs).join('path').attr('d', arc).attr('fill', (d) => d.data.color).style('cursor', 'default');
+  g.append('text').attr('text-anchor', 'middle').attr('dy', '0.1em').attr('fill', 'var(--color-fg)').style('font-family', 'var(--font-anthropic-serif)').style('font-size', '1.6rem').text(d3.format(',')(total));
+  g.append('text').attr('text-anchor', 'middle').attr('dy', '1.7em').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text(qid === 'q02' ? 'mentions' : 'answered');
+  const leg = document.createElement('div'); leg.className = 'yd-leg'; box.append(leg);
+  const legRows = rows.map((r) => {
+    const cells = [];
+    const sw = document.createElement('span'); sw.className = 'yd-sw'; sw.style.background = r.color;
+    const lab = document.createElement('span'); lab.className = 'yd-lab'; lab.textContent = r.answer;
+    const num = document.createElement('span'); num.className = 'yd-num'; num.textContent = d3.format(',')(r.count);
+    const pct = document.createElement('span'); pct.className = 'yd-pct'; pct.textContent = pctf(r.count / total);
+    cells.push(sw, lab, num, pct); leg.append(...cells); return cells;
+  });
+  const tip = document.createElement('div'); tip.className = 'yd-tip'; tip.hidden = true; el.append(tip);
+  const k = document.createElement('div'); k.className = 'yd-tip-k';
+  const v = document.createElement('div'); tip.append(k, v);
+  const focus = (i) => {
+    paths.attr('d', (d, j) => (j === i ? arcHi(d) : arc(d))).attr('opacity', (d, j) => (i == null || j === i ? 1 : 0.45));
+    legRows.forEach((cells, j) => cells.forEach((n) => n.classList.toggle('yd-row-dim', i != null && j !== i)));
+  };
+  paths.on('pointermove', (ev, d) => {
+    const i = arcs.indexOf(d); focus(i);
+    k.textContent = d.data.answer;
+    v.textContent = `${d3.format(',')(d.data.count)} of ${d3.format(',')(total)} · ${pctf(d.data.count / total)}`;
+    tip.hidden = false;
+    const [x, y] = d3.pointer(ev, el);
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    tip.style.left = Math.max(0, Math.min(el.clientWidth - tw, x + 12)) + 'px';
+    tip.style.top = Math.max(0, y - th - 8) + 'px';
+  }).on('pointerleave', () => { tip.hidden = true; focus(null); });
+});
+document.querySelectorAll('.yd-navlink').forEach((a) => a.addEventListener('click', (ev) => {
+  const t = document.getElementById(a.getAttribute('href').slice(1));
+  if (!t) return; ev.preventDefault(); t.scrollIntoView({behavior: 'smooth'}); dash.setLink(t.id);
+}));
+setTimeout(() => { const n = document.getElementById(location.hash.slice(1)); if (n) n.scrollIntoView(); }, 400);
+</script>
+</main><script>dash._run();</script></body></html>

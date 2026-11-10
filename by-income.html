@@ -1,0 +1,655 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaming Views by Income</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Source+Serif+4:wght@400&display=swap" rel="stylesheet">
+<style>:root{--font-anthropic-sans:"Libre Franklin",system-ui,sans-serif;--font-anthropic-serif:"Source Serif 4",Georgia,serif;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:16px;--cds-gap-lg:24px;--cds-gap-xl:40px;--cds-pad-xs:4px;--cds-pad-sm:8px;--cds-pad-lg:16px;--cds-radius:8px;
+--cds-font-size-caption:.8125rem;--cds-font-size-body:.9375rem;--cds-font-size-heading:1.25rem;--cds-font-size-title:clamp(1.6rem,5vw,2.25rem);--cds-font-weight-medium:500;--cds-dur-slow:.25s;
+--color-bg:#faf9f5;--color-fg:#1f1e1d;--color-fg-muted:#6b6862;--color-panel:#ffffff;--color-border-line:#e4e1d8;--color-bad:#c0392b;
+--cds-chart-muted:#c9c5bb;--cds-surface-popover:#ffffff;--cds-border:#e4e1d8;--cds-text-secondary:#6b6862;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--color-bg:#1c1b19;--color-fg:#ecebe6;--color-fg-muted:#a29f97;--color-panel:#262522;--color-border-line:#3a3834;
+--cds-chart-muted:#55524b;--cds-surface-popover:#2e2c29;--cds-border:#3a3834;--cds-text-secondary:#a29f97;--cds-shadow-popover:0 4px 16px rgba(0,0,0,.5)}}
+:root[data-theme="dark"]{--color-bg:#1c1b19;--color-fg:#ecebe6;--color-fg-muted:#a29f97;--color-panel:#262522;--color-border-line:#3a3834;--cds-chart-muted:#55524b;--cds-surface-popover:#2e2c29;--cds-border:#3a3834;--cds-text-secondary:#a29f97}
+*{box-sizing:border-box} html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans)}
+body{padding:16px} main{display:block}
+.sa-top{max-width:76rem;margin:0 auto 12px;font-size:.875rem}.sa-top a{color:var(--color-fg-muted);text-decoration:none}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script id="csv-byIncome" type="text/plain">qid,section,question,income,income_ord,answer,ord,count
+q01,Play,Does your kid/s play online games?,"Less than ₹70,000",0,Yes,0,8
+q01,Play,Does your kid/s play online games?,"Less than ₹70,000",0,Sometimes,1,4
+q01,Play,Does your kid/s play online games?,"Less than ₹70,000",0,No,2,0
+q01,Play,Does your kid/s play online games?,"Between ₹70,000 and ₹2,70,000",1,Yes,0,17
+q01,Play,Does your kid/s play online games?,"Between ₹70,000 and ₹2,70,000",1,Sometimes,1,6
+q01,Play,Does your kid/s play online games?,"Between ₹70,000 and ₹2,70,000",1,No,2,0
+q01,Play,Does your kid/s play online games?,"Between ₹2,70,000 and ₹8,45,000",2,Yes,0,12
+q01,Play,Does your kid/s play online games?,"Between ₹2,70,000 and ₹8,45,000",2,Sometimes,1,6
+q01,Play,Does your kid/s play online games?,"Between ₹2,70,000 and ₹8,45,000",2,No,2,0
+q01,Play,Does your kid/s play online games?,"More than ₹8,45,000",3,Yes,0,8
+q01,Play,Does your kid/s play online games?,"More than ₹8,45,000",3,Sometimes,1,6
+q01,Play,Does your kid/s play online games?,"More than ₹8,45,000",3,No,2,0
+q03,Attitudes,Online Gaming can be beneficial to kids,"Less than ₹70,000",0,Strongly Agree,0,2
+q03,Attitudes,Online Gaming can be beneficial to kids,"Less than ₹70,000",0,Agree,1,3
+q03,Attitudes,Online Gaming can be beneficial to kids,"Less than ₹70,000",0,Neutral,2,3
+q03,Attitudes,Online Gaming can be beneficial to kids,"Less than ₹70,000",0,Disagree,3,2
+q03,Attitudes,Online Gaming can be beneficial to kids,"Less than ₹70,000",0,Strongly Disagree,4,2
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,2
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹70,000 and ₹2,70,000",1,Agree,1,5
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,10
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,3
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,3
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,0
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,7
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,7
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,3
+q03,Attitudes,Online Gaming can be beneficial to kids,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,1
+q03,Attitudes,Online Gaming can be beneficial to kids,"More than ₹8,45,000",3,Strongly Agree,0,0
+q03,Attitudes,Online Gaming can be beneficial to kids,"More than ₹8,45,000",3,Agree,1,7
+q03,Attitudes,Online Gaming can be beneficial to kids,"More than ₹8,45,000",3,Neutral,2,5
+q03,Attitudes,Online Gaming can be beneficial to kids,"More than ₹8,45,000",3,Disagree,3,2
+q03,Attitudes,Online Gaming can be beneficial to kids,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q04,Attitudes,Online Gaming is a good stress-buster,"Less than ₹70,000",0,Strongly Agree,0,3
+q04,Attitudes,Online Gaming is a good stress-buster,"Less than ₹70,000",0,Agree,1,5
+q04,Attitudes,Online Gaming is a good stress-buster,"Less than ₹70,000",0,Neutral,2,3
+q04,Attitudes,Online Gaming is a good stress-buster,"Less than ₹70,000",0,Disagree,3,0
+q04,Attitudes,Online Gaming is a good stress-buster,"Less than ₹70,000",0,Strongly Disagree,4,1
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,2
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹70,000 and ₹2,70,000",1,Agree,1,9
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,9
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,2
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,1
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,1
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,8
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,7
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,2
+q04,Attitudes,Online Gaming is a good stress-buster,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,0
+q04,Attitudes,Online Gaming is a good stress-buster,"More than ₹8,45,000",3,Strongly Agree,0,0
+q04,Attitudes,Online Gaming is a good stress-buster,"More than ₹8,45,000",3,Agree,1,9
+q04,Attitudes,Online Gaming is a good stress-buster,"More than ₹8,45,000",3,Neutral,2,3
+q04,Attitudes,Online Gaming is a good stress-buster,"More than ₹8,45,000",3,Disagree,3,2
+q04,Attitudes,Online Gaming is a good stress-buster,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Less than ₹70,000",0,Strongly Agree,0,3
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Less than ₹70,000",0,Agree,1,2
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Less than ₹70,000",0,Neutral,2,2
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Less than ₹70,000",0,Disagree,3,3
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Less than ₹70,000",0,Strongly Disagree,4,2
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,2
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹70,000 and ₹2,70,000",1,Agree,1,5
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,6
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,5
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,5
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,0
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,3
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,5
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,7
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,3
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"More than ₹8,45,000",3,Strongly Agree,0,0
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"More than ₹8,45,000",3,Agree,1,4
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"More than ₹8,45,000",3,Neutral,2,4
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"More than ₹8,45,000",3,Disagree,3,5
+q05,Attitudes,Online Gaming is a good way for kids to socialize,"More than ₹8,45,000",3,Strongly Disagree,4,1
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Less than ₹70,000",0,Strongly Agree,0,2
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Less than ₹70,000",0,Agree,1,3
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Less than ₹70,000",0,Neutral,2,1
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Less than ₹70,000",0,Disagree,3,3
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Less than ₹70,000",0,Strongly Disagree,4,3
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,2
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹70,000 and ₹2,70,000",1,Agree,1,5
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,6
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,5
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,5
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,0
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,3
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,5
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,8
+q06,Attitudes,Online Gaming can be a profitable career for kids,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,2
+q06,Attitudes,Online Gaming can be a profitable career for kids,"More than ₹8,45,000",3,Strongly Agree,0,0
+q06,Attitudes,Online Gaming can be a profitable career for kids,"More than ₹8,45,000",3,Agree,1,5
+q06,Attitudes,Online Gaming can be a profitable career for kids,"More than ₹8,45,000",3,Neutral,2,5
+q06,Attitudes,Online Gaming can be a profitable career for kids,"More than ₹8,45,000",3,Disagree,3,4
+q06,Attitudes,Online Gaming can be a profitable career for kids,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q07,Attitudes,Online Gaming requires parental supervision,"Less than ₹70,000",0,Strongly Agree,0,6
+q07,Attitudes,Online Gaming requires parental supervision,"Less than ₹70,000",0,Agree,1,3
+q07,Attitudes,Online Gaming requires parental supervision,"Less than ₹70,000",0,Neutral,2,1
+q07,Attitudes,Online Gaming requires parental supervision,"Less than ₹70,000",0,Disagree,3,1
+q07,Attitudes,Online Gaming requires parental supervision,"Less than ₹70,000",0,Strongly Disagree,4,1
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,9
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹70,000 and ₹2,70,000",1,Agree,1,6
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,7
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,0
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,1
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,4
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,8
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,3
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,3
+q07,Attitudes,Online Gaming requires parental supervision,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,0
+q07,Attitudes,Online Gaming requires parental supervision,"More than ₹8,45,000",3,Strongly Agree,0,7
+q07,Attitudes,Online Gaming requires parental supervision,"More than ₹8,45,000",3,Agree,1,5
+q07,Attitudes,Online Gaming requires parental supervision,"More than ₹8,45,000",3,Neutral,2,2
+q07,Attitudes,Online Gaming requires parental supervision,"More than ₹8,45,000",3,Disagree,3,0
+q07,Attitudes,Online Gaming requires parental supervision,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q08,Attitudes,Online Gaming can be a distraction,"Less than ₹70,000",0,Strongly Agree,0,7
+q08,Attitudes,Online Gaming can be a distraction,"Less than ₹70,000",0,Agree,1,3
+q08,Attitudes,Online Gaming can be a distraction,"Less than ₹70,000",0,Neutral,2,1
+q08,Attitudes,Online Gaming can be a distraction,"Less than ₹70,000",0,Disagree,3,0
+q08,Attitudes,Online Gaming can be a distraction,"Less than ₹70,000",0,Strongly Disagree,4,1
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,10
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹70,000 and ₹2,70,000",1,Agree,1,10
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,1
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,2
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,0
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,5
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,10
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,1
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,2
+q08,Attitudes,Online Gaming can be a distraction,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,0
+q08,Attitudes,Online Gaming can be a distraction,"More than ₹8,45,000",3,Strongly Agree,0,4
+q08,Attitudes,Online Gaming can be a distraction,"More than ₹8,45,000",3,Agree,1,9
+q08,Attitudes,Online Gaming can be a distraction,"More than ₹8,45,000",3,Neutral,2,1
+q08,Attitudes,Online Gaming can be a distraction,"More than ₹8,45,000",3,Disagree,3,0
+q08,Attitudes,Online Gaming can be a distraction,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q09,Attitudes,Online Games are violent in nature,"Less than ₹70,000",0,Strongly Agree,0,2
+q09,Attitudes,Online Games are violent in nature,"Less than ₹70,000",0,Agree,1,3
+q09,Attitudes,Online Games are violent in nature,"Less than ₹70,000",0,Neutral,2,4
+q09,Attitudes,Online Games are violent in nature,"Less than ₹70,000",0,Disagree,3,1
+q09,Attitudes,Online Games are violent in nature,"Less than ₹70,000",0,Strongly Disagree,4,2
+q09,Attitudes,Online Games are violent in nature,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,6
+q09,Attitudes,Online Games are violent in nature,"Between ₹70,000 and ₹2,70,000",1,Agree,1,6
+q09,Attitudes,Online Games are violent in nature,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,9
+q09,Attitudes,Online Games are violent in nature,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,2
+q09,Attitudes,Online Games are violent in nature,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,0
+q09,Attitudes,Online Games are violent in nature,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,3
+q09,Attitudes,Online Games are violent in nature,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,7
+q09,Attitudes,Online Games are violent in nature,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,7
+q09,Attitudes,Online Games are violent in nature,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,1
+q09,Attitudes,Online Games are violent in nature,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,0
+q09,Attitudes,Online Games are violent in nature,"More than ₹8,45,000",3,Strongly Agree,0,3
+q09,Attitudes,Online Games are violent in nature,"More than ₹8,45,000",3,Agree,1,1
+q09,Attitudes,Online Games are violent in nature,"More than ₹8,45,000",3,Neutral,2,9
+q09,Attitudes,Online Games are violent in nature,"More than ₹8,45,000",3,Disagree,3,1
+q09,Attitudes,Online Games are violent in nature,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q10,Attitudes,Online Gaming can have dangerous consequences,"Less than ₹70,000",0,Strongly Agree,0,5
+q10,Attitudes,Online Gaming can have dangerous consequences,"Less than ₹70,000",0,Agree,1,2
+q10,Attitudes,Online Gaming can have dangerous consequences,"Less than ₹70,000",0,Neutral,2,2
+q10,Attitudes,Online Gaming can have dangerous consequences,"Less than ₹70,000",0,Disagree,3,1
+q10,Attitudes,Online Gaming can have dangerous consequences,"Less than ₹70,000",0,Strongly Disagree,4,2
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,6
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹70,000 and ₹2,70,000",1,Agree,1,8
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,7
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,2
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,0
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,3
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,10
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,3
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,2
+q10,Attitudes,Online Gaming can have dangerous consequences,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,0
+q10,Attitudes,Online Gaming can have dangerous consequences,"More than ₹8,45,000",3,Strongly Agree,0,2
+q10,Attitudes,Online Gaming can have dangerous consequences,"More than ₹8,45,000",3,Agree,1,9
+q10,Attitudes,Online Gaming can have dangerous consequences,"More than ₹8,45,000",3,Neutral,2,1
+q10,Attitudes,Online Gaming can have dangerous consequences,"More than ₹8,45,000",3,Disagree,3,1
+q10,Attitudes,Online Gaming can have dangerous consequences,"More than ₹8,45,000",3,Strongly Disagree,4,1
+q11,Attitudes,Online Gaming is a waste of money,"Less than ₹70,000",0,Strongly Agree,0,3
+q11,Attitudes,Online Gaming is a waste of money,"Less than ₹70,000",0,Agree,1,4
+q11,Attitudes,Online Gaming is a waste of money,"Less than ₹70,000",0,Neutral,2,2
+q11,Attitudes,Online Gaming is a waste of money,"Less than ₹70,000",0,Disagree,3,2
+q11,Attitudes,Online Gaming is a waste of money,"Less than ₹70,000",0,Strongly Disagree,4,1
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹70,000 and ₹2,70,000",1,Strongly Agree,0,2
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹70,000 and ₹2,70,000",1,Agree,1,7
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹70,000 and ₹2,70,000",1,Neutral,2,7
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹70,000 and ₹2,70,000",1,Disagree,3,6
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹70,000 and ₹2,70,000",1,Strongly Disagree,4,1
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Agree,0,3
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹2,70,000 and ₹8,45,000",2,Agree,1,6
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹2,70,000 and ₹8,45,000",2,Neutral,2,4
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹2,70,000 and ₹8,45,000",2,Disagree,3,5
+q11,Attitudes,Online Gaming is a waste of money,"Between ₹2,70,000 and ₹8,45,000",2,Strongly Disagree,4,0
+q11,Attitudes,Online Gaming is a waste of money,"More than ₹8,45,000",3,Strongly Agree,0,2
+q11,Attitudes,Online Gaming is a waste of money,"More than ₹8,45,000",3,Agree,1,0
+q11,Attitudes,Online Gaming is a waste of money,"More than ₹8,45,000",3,Neutral,2,11
+q11,Attitudes,Online Gaming is a waste of money,"More than ₹8,45,000",3,Disagree,3,1
+q11,Attitudes,Online Gaming is a waste of money,"More than ₹8,45,000",3,Strongly Disagree,4,0
+q12,Fears,Online Games can be addictive,"Less than ₹70,000",0,High fear,0,5
+q12,Fears,Online Games can be addictive,"Less than ₹70,000",0,Medium fear,1,6
+q12,Fears,Online Games can be addictive,"Less than ₹70,000",0,Low fear,2,1
+q12,Fears,Online Games can be addictive,"Between ₹70,000 and ₹2,70,000",1,High fear,0,16
+q12,Fears,Online Games can be addictive,"Between ₹70,000 and ₹2,70,000",1,Medium fear,1,6
+q12,Fears,Online Games can be addictive,"Between ₹70,000 and ₹2,70,000",1,Low fear,2,1
+q12,Fears,Online Games can be addictive,"Between ₹2,70,000 and ₹8,45,000",2,High fear,0,9
+q12,Fears,Online Games can be addictive,"Between ₹2,70,000 and ₹8,45,000",2,Medium fear,1,8
+q12,Fears,Online Games can be addictive,"Between ₹2,70,000 and ₹8,45,000",2,Low fear,2,1
+q12,Fears,Online Games can be addictive,"More than ₹8,45,000",3,High fear,0,8
+q12,Fears,Online Games can be addictive,"More than ₹8,45,000",3,Medium fear,1,5
+q12,Fears,Online Games can be addictive,"More than ₹8,45,000",3,Low fear,2,1
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Less than ₹70,000",0,High fear,0,4
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Less than ₹70,000",0,Medium fear,1,4
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Less than ₹70,000",0,Low fear,2,3
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Less than ₹70,000",0,No fear,3,1
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹70,000 and ₹2,70,000",1,High fear,0,6
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹70,000 and ₹2,70,000",1,Medium fear,1,14
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹70,000 and ₹2,70,000",1,Low fear,2,2
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹70,000 and ₹2,70,000",1,No fear,3,1
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹2,70,000 and ₹8,45,000",2,High fear,0,8
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹2,70,000 and ₹8,45,000",2,Medium fear,1,6
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹2,70,000 and ₹8,45,000",2,Low fear,2,3
+q13,Fears,Online Games can cause violent/aggressive behaviour,"Between ₹2,70,000 and ₹8,45,000",2,No fear,3,1
+q13,Fears,Online Games can cause violent/aggressive behaviour,"More than ₹8,45,000",3,High fear,0,3
+q13,Fears,Online Games can cause violent/aggressive behaviour,"More than ₹8,45,000",3,Medium fear,1,8
+q13,Fears,Online Games can cause violent/aggressive behaviour,"More than ₹8,45,000",3,Low fear,2,1
+q13,Fears,Online Games can cause violent/aggressive behaviour,"More than ₹8,45,000",3,No fear,3,2
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Less than ₹70,000",0,High fear,0,6
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Less than ₹70,000",0,Medium fear,1,4
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Less than ₹70,000",0,Low fear,2,2
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Between ₹70,000 and ₹2,70,000",1,High fear,0,12
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Between ₹70,000 and ₹2,70,000",1,Medium fear,1,10
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Between ₹70,000 and ₹2,70,000",1,Low fear,2,1
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Between ₹2,70,000 and ₹8,45,000",2,High fear,0,6
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Between ₹2,70,000 and ₹8,45,000",2,Medium fear,1,10
+q14,Fears,Online Games exposes kids to age-inappropriate content,"Between ₹2,70,000 and ₹8,45,000",2,Low fear,2,2
+q14,Fears,Online Games exposes kids to age-inappropriate content,"More than ₹8,45,000",3,High fear,0,3
+q14,Fears,Online Games exposes kids to age-inappropriate content,"More than ₹8,45,000",3,Medium fear,1,8
+q14,Fears,Online Games exposes kids to age-inappropriate content,"More than ₹8,45,000",3,Low fear,2,3
+q15,Fears,Online Games can affect academic performance,"Less than ₹70,000",0,High fear,0,5
+q15,Fears,Online Games can affect academic performance,"Less than ₹70,000",0,Medium fear,1,6
+q15,Fears,Online Games can affect academic performance,"Less than ₹70,000",0,Low fear,2,1
+q15,Fears,Online Games can affect academic performance,"Less than ₹70,000",0,No fear,3,0
+q15,Fears,Online Games can affect academic performance,"Between ₹70,000 and ₹2,70,000",1,High fear,0,15
+q15,Fears,Online Games can affect academic performance,"Between ₹70,000 and ₹2,70,000",1,Medium fear,1,7
+q15,Fears,Online Games can affect academic performance,"Between ₹70,000 and ₹2,70,000",1,Low fear,2,0
+q15,Fears,Online Games can affect academic performance,"Between ₹70,000 and ₹2,70,000",1,No fear,3,1
+q15,Fears,Online Games can affect academic performance,"Between ₹2,70,000 and ₹8,45,000",2,High fear,0,8
+q15,Fears,Online Games can affect academic performance,"Between ₹2,70,000 and ₹8,45,000",2,Medium fear,1,9
+q15,Fears,Online Games can affect academic performance,"Between ₹2,70,000 and ₹8,45,000",2,Low fear,2,1
+q15,Fears,Online Games can affect academic performance,"Between ₹2,70,000 and ₹8,45,000",2,No fear,3,0
+q15,Fears,Online Games can affect academic performance,"More than ₹8,45,000",3,High fear,0,7
+q15,Fears,Online Games can affect academic performance,"More than ₹8,45,000",3,Medium fear,1,4
+q15,Fears,Online Games can affect academic performance,"More than ₹8,45,000",3,Low fear,2,2
+q15,Fears,Online Games can affect academic performance,"More than ₹8,45,000",3,No fear,3,1
+q16,Fears,Online Games can have adverse health affects,"Less than ₹70,000",0,High fear,0,6
+q16,Fears,Online Games can have adverse health affects,"Less than ₹70,000",0,Medium fear,1,5
+q16,Fears,Online Games can have adverse health affects,"Less than ₹70,000",0,Low fear,2,1
+q16,Fears,Online Games can have adverse health affects,"Less than ₹70,000",0,No fear,3,0
+q16,Fears,Online Games can have adverse health affects,"Between ₹70,000 and ₹2,70,000",1,High fear,0,12
+q16,Fears,Online Games can have adverse health affects,"Between ₹70,000 and ₹2,70,000",1,Medium fear,1,9
+q16,Fears,Online Games can have adverse health affects,"Between ₹70,000 and ₹2,70,000",1,Low fear,2,2
+q16,Fears,Online Games can have adverse health affects,"Between ₹70,000 and ₹2,70,000",1,No fear,3,0
+q16,Fears,Online Games can have adverse health affects,"Between ₹2,70,000 and ₹8,45,000",2,High fear,0,9
+q16,Fears,Online Games can have adverse health affects,"Between ₹2,70,000 and ₹8,45,000",2,Medium fear,1,6
+q16,Fears,Online Games can have adverse health affects,"Between ₹2,70,000 and ₹8,45,000",2,Low fear,2,2
+q16,Fears,Online Games can have adverse health affects,"Between ₹2,70,000 and ₹8,45,000",2,No fear,3,1
+q16,Fears,Online Games can have adverse health affects,"More than ₹8,45,000",3,High fear,0,1
+q16,Fears,Online Games can have adverse health affects,"More than ₹8,45,000",3,Medium fear,1,8
+q16,Fears,Online Games can have adverse health affects,"More than ₹8,45,000",3,Low fear,2,3
+q16,Fears,Online Games can have adverse health affects,"More than ₹8,45,000",3,No fear,3,2
+q17,Role,I have played Online Games myself,"Less than ₹70,000",0,True,0,9
+q17,Role,I have played Online Games myself,"Less than ₹70,000",0,False,1,3
+q17,Role,I have played Online Games myself,"Between ₹70,000 and ₹2,70,000",1,True,0,13
+q17,Role,I have played Online Games myself,"Between ₹70,000 and ₹2,70,000",1,False,1,10
+q17,Role,I have played Online Games myself,"Between ₹2,70,000 and ₹8,45,000",2,True,0,13
+q17,Role,I have played Online Games myself,"Between ₹2,70,000 and ₹8,45,000",2,False,1,5
+q17,Role,I have played Online Games myself,"More than ₹8,45,000",3,True,0,6
+q17,Role,I have played Online Games myself,"More than ₹8,45,000",3,False,1,8
+q18,Role,I know my kids' favorite Online Games,"Less than ₹70,000",0,True,0,9
+q18,Role,I know my kids' favorite Online Games,"Less than ₹70,000",0,False,1,3
+q18,Role,I know my kids' favorite Online Games,"Between ₹70,000 and ₹2,70,000",1,True,0,17
+q18,Role,I know my kids' favorite Online Games,"Between ₹70,000 and ₹2,70,000",1,False,1,6
+q18,Role,I know my kids' favorite Online Games,"Between ₹2,70,000 and ₹8,45,000",2,True,0,11
+q18,Role,I know my kids' favorite Online Games,"Between ₹2,70,000 and ₹8,45,000",2,False,1,7
+q18,Role,I know my kids' favorite Online Games,"More than ₹8,45,000",3,True,0,10
+q18,Role,I know my kids' favorite Online Games,"More than ₹8,45,000",3,False,1,4
+q19,Role,I understand why my kids play Online Games,"Less than ₹70,000",0,True,0,12
+q19,Role,I understand why my kids play Online Games,"Less than ₹70,000",0,False,1,0
+q19,Role,I understand why my kids play Online Games,"Between ₹70,000 and ₹2,70,000",1,True,0,15
+q19,Role,I understand why my kids play Online Games,"Between ₹70,000 and ₹2,70,000",1,False,1,8
+q19,Role,I understand why my kids play Online Games,"Between ₹2,70,000 and ₹8,45,000",2,True,0,12
+q19,Role,I understand why my kids play Online Games,"Between ₹2,70,000 and ₹8,45,000",2,False,1,6
+q19,Role,I understand why my kids play Online Games,"More than ₹8,45,000",3,True,0,14
+q19,Role,I understand why my kids play Online Games,"More than ₹8,45,000",3,False,1,0
+q20,Role,I have sometimes played Online Games with my kids,"Less than ₹70,000",0,True,0,7
+q20,Role,I have sometimes played Online Games with my kids,"Less than ₹70,000",0,False,1,5
+q20,Role,I have sometimes played Online Games with my kids,"Between ₹70,000 and ₹2,70,000",1,True,0,13
+q20,Role,I have sometimes played Online Games with my kids,"Between ₹70,000 and ₹2,70,000",1,False,1,10
+q20,Role,I have sometimes played Online Games with my kids,"Between ₹2,70,000 and ₹8,45,000",2,True,0,7
+q20,Role,I have sometimes played Online Games with my kids,"Between ₹2,70,000 and ₹8,45,000",2,False,1,11
+q20,Role,I have sometimes played Online Games with my kids,"More than ₹8,45,000",3,True,0,5
+q20,Role,I have sometimes played Online Games with my kids,"More than ₹8,45,000",3,False,1,9
+q21,Role,I am not interested in playing/learning about Online Games,"Less than ₹70,000",0,True,0,6
+q21,Role,I am not interested in playing/learning about Online Games,"Less than ₹70,000",0,False,1,6
+q21,Role,I am not interested in playing/learning about Online Games,"Between ₹70,000 and ₹2,70,000",1,True,0,11
+q21,Role,I am not interested in playing/learning about Online Games,"Between ₹70,000 and ₹2,70,000",1,False,1,12
+q21,Role,I am not interested in playing/learning about Online Games,"Between ₹2,70,000 and ₹8,45,000",2,True,0,10
+q21,Role,I am not interested in playing/learning about Online Games,"Between ₹2,70,000 and ₹8,45,000",2,False,1,8
+q21,Role,I am not interested in playing/learning about Online Games,"More than ₹8,45,000",3,True,0,8
+q21,Role,I am not interested in playing/learning about Online Games,"More than ₹8,45,000",3,False,1,6
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"Less than ₹70,000",0,True,0,12
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"Less than ₹70,000",0,False,1,0
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"Between ₹70,000 and ₹2,70,000",1,True,0,21
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"Between ₹70,000 and ₹2,70,000",1,False,1,2
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"Between ₹2,70,000 and ₹8,45,000",2,True,0,18
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"Between ₹2,70,000 and ₹8,45,000",2,False,1,0
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"More than ₹8,45,000",3,True,0,14
+q22,Role,I think its necessary to place rules for kids' Online Gaming behaviour,"More than ₹8,45,000",3,False,1,0
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"Less than ₹70,000",0,True,0,6
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"Less than ₹70,000",0,False,1,5
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"Between ₹70,000 and ₹2,70,000",1,True,0,7
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"Between ₹70,000 and ₹2,70,000",1,False,1,15
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"Between ₹2,70,000 and ₹8,45,000",2,True,0,8
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"Between ₹2,70,000 and ₹8,45,000",2,False,1,10
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"More than ₹8,45,000",3,True,0,4
+q23,Rules,I only allow my kid/s to play Online Games on certain days of the week,"More than ₹8,45,000",3,False,1,9
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"Less than ₹70,000",0,True,0,8
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"Less than ₹70,000",0,False,1,3
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"Between ₹70,000 and ₹2,70,000",1,True,0,10
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"Between ₹70,000 and ₹2,70,000",1,False,1,13
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"Between ₹2,70,000 and ₹8,45,000",2,True,0,11
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"Between ₹2,70,000 and ₹8,45,000",2,False,1,7
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"More than ₹8,45,000",3,True,0,5
+q24,Rules,I only allow my kid/s to play Online Games at certain times of the day,"More than ₹8,45,000",3,False,1,9
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"Less than ₹70,000",0,True,0,6
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"Less than ₹70,000",0,False,1,5
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"Between ₹70,000 and ₹2,70,000",1,True,0,9
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"Between ₹70,000 and ₹2,70,000",1,False,1,14
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"Between ₹2,70,000 and ₹8,45,000",2,True,0,13
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"Between ₹2,70,000 and ₹8,45,000",2,False,1,5
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"More than ₹8,45,000",3,True,0,7
+q25,Rules,I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour),"More than ₹8,45,000",3,False,1,7
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"Less than ₹70,000",0,True,0,7
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"Less than ₹70,000",0,False,1,4
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"Between ₹70,000 and ₹2,70,000",1,True,0,13
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"Between ₹70,000 and ₹2,70,000",1,False,1,10
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"Between ₹2,70,000 and ₹8,45,000",2,True,0,11
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"Between ₹2,70,000 and ₹8,45,000",2,False,1,7
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"More than ₹8,45,000",3,True,0,4
+q26,Rules,I do not allow my kid/s to play Online Games during exams,"More than ₹8,45,000",3,False,1,10
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"Less than ₹70,000",0,True,0,7
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"Less than ₹70,000",0,False,1,4
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"Between ₹70,000 and ₹2,70,000",1,True,0,13
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"Between ₹70,000 and ₹2,70,000",1,False,1,10
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"Between ₹2,70,000 and ₹8,45,000",2,True,0,12
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"Between ₹2,70,000 and ₹8,45,000",2,False,1,6
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"More than ₹8,45,000",3,True,0,8
+q27,Rules,I only allow my kid/s to play certain kinds of Online Games,"More than ₹8,45,000",3,False,1,6
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"Less than ₹70,000",0,True,0,3
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"Less than ₹70,000",0,False,1,7
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"Between ₹70,000 and ₹2,70,000",1,True,0,11
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"Between ₹70,000 and ₹2,70,000",1,False,1,11
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"Between ₹2,70,000 and ₹8,45,000",2,True,0,12
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"Between ₹2,70,000 and ₹8,45,000",2,False,1,6
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"More than ₹8,45,000",3,True,0,6
+q28,Rules,I only allow my kid/s to spend a certain amount of money on Online Games,"More than ₹8,45,000",3,False,1,8
+q29,Rules,I have no rules whatsoever,"Less than ₹70,000",0,True,0,2
+q29,Rules,I have no rules whatsoever,"Less than ₹70,000",0,False,1,9
+q29,Rules,I have no rules whatsoever,"Between ₹70,000 and ₹2,70,000",1,True,0,9
+q29,Rules,I have no rules whatsoever,"Between ₹70,000 and ₹2,70,000",1,False,1,13
+q29,Rules,I have no rules whatsoever,"Between ₹2,70,000 and ₹8,45,000",2,True,0,3
+q29,Rules,I have no rules whatsoever,"Between ₹2,70,000 and ₹8,45,000",2,False,1,15
+q29,Rules,I have no rules whatsoever,"More than ₹8,45,000",3,True,0,6
+q29,Rules,I have no rules whatsoever,"More than ₹8,45,000",3,False,1,8
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Less than ₹70,000",0,High Impact,0,3
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Less than ₹70,000",0,Medium Impact,1,6
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Less than ₹70,000",0,Low Impact,2,3
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Less than ₹70,000",0,No Impact,3,0
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹70,000 and ₹2,70,000",1,High Impact,0,5
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹70,000 and ₹2,70,000",1,Medium Impact,1,11
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹70,000 and ₹2,70,000",1,Low Impact,2,4
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹70,000 and ₹2,70,000",1,No Impact,3,3
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹2,70,000 and ₹8,45,000",2,High Impact,0,6
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹2,70,000 and ₹8,45,000",2,Medium Impact,1,5
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹2,70,000 and ₹8,45,000",2,Low Impact,2,6
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"Between ₹2,70,000 and ₹8,45,000",2,No Impact,3,1
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"More than ₹8,45,000",3,High Impact,0,1
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"More than ₹8,45,000",3,Medium Impact,1,5
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"More than ₹8,45,000",3,Low Impact,2,6
+q30,Impact,Frustrations in the family due to kids' Online Gaming behavior,"More than ₹8,45,000",3,No Impact,3,2
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Less than ₹70,000",0,High Impact,0,4
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Less than ₹70,000",0,Medium Impact,1,4
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Less than ₹70,000",0,Low Impact,2,3
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Less than ₹70,000",0,No Impact,3,1
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹70,000 and ₹2,70,000",1,High Impact,0,4
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹70,000 and ₹2,70,000",1,Medium Impact,1,9
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹70,000 and ₹2,70,000",1,Low Impact,2,6
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹70,000 and ₹2,70,000",1,No Impact,3,4
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹2,70,000 and ₹8,45,000",2,High Impact,0,5
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹2,70,000 and ₹8,45,000",2,Medium Impact,1,4
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹2,70,000 and ₹8,45,000",2,Low Impact,2,6
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"Between ₹2,70,000 and ₹8,45,000",2,No Impact,3,3
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"More than ₹8,45,000",3,High Impact,0,1
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"More than ₹8,45,000",3,Medium Impact,1,6
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"More than ₹8,45,000",3,Low Impact,2,5
+q31,Impact,Arguments/conflicts in the family due to kids' Online behavior,"More than ₹8,45,000",3,No Impact,3,2
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Less than ₹70,000",0,High Impact,0,4
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Less than ₹70,000",0,Medium Impact,1,3
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Less than ₹70,000",0,Low Impact,2,4
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Less than ₹70,000",0,No Impact,3,1
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹70,000 and ₹2,70,000",1,High Impact,0,3
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹70,000 and ₹2,70,000",1,Medium Impact,1,11
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹70,000 and ₹2,70,000",1,Low Impact,2,5
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹70,000 and ₹2,70,000",1,No Impact,3,4
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹2,70,000 and ₹8,45,000",2,High Impact,0,6
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹2,70,000 and ₹8,45,000",2,Medium Impact,1,5
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹2,70,000 and ₹8,45,000",2,Low Impact,2,2
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"Between ₹2,70,000 and ₹8,45,000",2,No Impact,3,5
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"More than ₹8,45,000",3,High Impact,0,2
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"More than ₹8,45,000",3,Medium Impact,1,2
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"More than ₹8,45,000",3,Low Impact,2,7
+q32,Impact,Strain in parent-child relationship due to kids' Online Gaming Behavior,"More than ₹8,45,000",3,No Impact,3,3
+q34,About,What age group are your kid/s in?,"Less than ₹70,000",0,Infants/Toddlers (0-3 years old),0,0
+q34,About,What age group are your kid/s in?,"Less than ₹70,000",0,Pre-school (4-5 years old),1,3
+q34,About,What age group are your kid/s in?,"Less than ₹70,000",0,School Age (6-12 years old),2,3
+q34,About,What age group are your kid/s in?,"Less than ₹70,000",0,Adolescents (13-17 years old),3,3
+q34,About,What age group are your kid/s in?,"Less than ₹70,000",0,Adults (18 years and above),4,3
+q34,About,What age group are your kid/s in?,"Between ₹70,000 and ₹2,70,000",1,Infants/Toddlers (0-3 years old),0,0
+q34,About,What age group are your kid/s in?,"Between ₹70,000 and ₹2,70,000",1,Pre-school (4-5 years old),1,2
+q34,About,What age group are your kid/s in?,"Between ₹70,000 and ₹2,70,000",1,School Age (6-12 years old),2,13
+q34,About,What age group are your kid/s in?,"Between ₹70,000 and ₹2,70,000",1,Adolescents (13-17 years old),3,2
+q34,About,What age group are your kid/s in?,"Between ₹70,000 and ₹2,70,000",1,Adults (18 years and above),4,6
+q34,About,What age group are your kid/s in?,"Between ₹2,70,000 and ₹8,45,000",2,Infants/Toddlers (0-3 years old),0,0
+q34,About,What age group are your kid/s in?,"Between ₹2,70,000 and ₹8,45,000",2,Pre-school (4-5 years old),1,2
+q34,About,What age group are your kid/s in?,"Between ₹2,70,000 and ₹8,45,000",2,School Age (6-12 years old),2,5
+q34,About,What age group are your kid/s in?,"Between ₹2,70,000 and ₹8,45,000",2,Adolescents (13-17 years old),3,4
+q34,About,What age group are your kid/s in?,"Between ₹2,70,000 and ₹8,45,000",2,Adults (18 years and above),4,7
+q34,About,What age group are your kid/s in?,"More than ₹8,45,000",3,Infants/Toddlers (0-3 years old),0,1
+q34,About,What age group are your kid/s in?,"More than ₹8,45,000",3,Pre-school (4-5 years old),1,1
+q34,About,What age group are your kid/s in?,"More than ₹8,45,000",3,School Age (6-12 years old),2,4
+q34,About,What age group are your kid/s in?,"More than ₹8,45,000",3,Adolescents (13-17 years old),3,1
+q34,About,What age group are your kid/s in?,"More than ₹8,45,000",3,Adults (18 years and above),4,7
+q35,About,What is your gender?,"Less than ₹70,000",0,Female,0,6
+q35,About,What is your gender?,"Less than ₹70,000",0,Male,1,6
+q35,About,What is your gender?,"Between ₹70,000 and ₹2,70,000",1,Female,0,16
+q35,About,What is your gender?,"Between ₹70,000 and ₹2,70,000",1,Male,1,7
+q35,About,What is your gender?,"Between ₹2,70,000 and ₹8,45,000",2,Female,0,13
+q35,About,What is your gender?,"Between ₹2,70,000 and ₹8,45,000",2,Male,1,5
+q35,About,What is your gender?,"More than ₹8,45,000",3,Female,0,8
+q35,About,What is your gender?,"More than ₹8,45,000",3,Male,1,6
+q36,About,What is your occupation?,"Less than ₹70,000",0,Working Professional,0,2
+q36,About,What is your occupation?,"Less than ₹70,000",0,Housewife,1,4
+q36,About,What is your occupation?,"Less than ₹70,000",0,Entrepreneur,2,2
+q36,About,What is your occupation?,"Less than ₹70,000",0,Retiree,3,2
+q36,About,What is your occupation?,"Less than ₹70,000",0,Unemployed,4,1
+q36,About,What is your occupation?,"Less than ₹70,000",0,Teacher,5,1
+q36,About,What is your occupation?,"Between ₹70,000 and ₹2,70,000",1,Working Professional,0,10
+q36,About,What is your occupation?,"Between ₹70,000 and ₹2,70,000",1,Housewife,1,4
+q36,About,What is your occupation?,"Between ₹70,000 and ₹2,70,000",1,Entrepreneur,2,5
+q36,About,What is your occupation?,"Between ₹70,000 and ₹2,70,000",1,Retiree,3,1
+q36,About,What is your occupation?,"Between ₹70,000 and ₹2,70,000",1,Unemployed,4,3
+q36,About,What is your occupation?,"Between ₹70,000 and ₹2,70,000",1,Teacher,5,0
+q36,About,What is your occupation?,"Between ₹2,70,000 and ₹8,45,000",2,Working Professional,0,10
+q36,About,What is your occupation?,"Between ₹2,70,000 and ₹8,45,000",2,Housewife,1,1
+q36,About,What is your occupation?,"Between ₹2,70,000 and ₹8,45,000",2,Entrepreneur,2,2
+q36,About,What is your occupation?,"Between ₹2,70,000 and ₹8,45,000",2,Retiree,3,5
+q36,About,What is your occupation?,"Between ₹2,70,000 and ₹8,45,000",2,Unemployed,4,0
+q36,About,What is your occupation?,"Between ₹2,70,000 and ₹8,45,000",2,Teacher,5,0
+q36,About,What is your occupation?,"More than ₹8,45,000",3,Working Professional,0,6
+q36,About,What is your occupation?,"More than ₹8,45,000",3,Housewife,1,3
+q36,About,What is your occupation?,"More than ₹8,45,000",3,Entrepreneur,2,1
+q36,About,What is your occupation?,"More than ₹8,45,000",3,Retiree,3,1
+q36,About,What is your occupation?,"More than ₹8,45,000",3,Unemployed,4,2
+q36,About,What is your occupation?,"More than ₹8,45,000",3,Teacher,5,1
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Other,0,6
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Kolkata,1,3
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Bangalore,2,3
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Delhi,3,0
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Mumbai,4,0
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Hyderabad,5,0
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Chennai,6,0
+q37,About,Which city do you live in?,"Less than ₹70,000",0,Pune,7,0
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Other,0,4
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Kolkata,1,10
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Bangalore,2,4
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Delhi,3,1
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Mumbai,4,2
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Hyderabad,5,1
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Chennai,6,1
+q37,About,Which city do you live in?,"Between ₹70,000 and ₹2,70,000",1,Pune,7,0
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Other,0,5
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Kolkata,1,2
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Bangalore,2,4
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Delhi,3,3
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Mumbai,4,1
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Hyderabad,5,1
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Chennai,6,1
+q37,About,Which city do you live in?,"Between ₹2,70,000 and ₹8,45,000",2,Pune,7,1
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Other,0,4
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Kolkata,1,2
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Bangalore,2,3
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Delhi,3,2
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Mumbai,4,2
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Hyderabad,5,1
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Chennai,6,0
+q37,About,Which city do you live in?,"More than ₹8,45,000",3,Pune,7,0
+</script>
+<script>window.dash=(function(){const raw={},calcs={},draws={};
+const dark=matchMedia('(prefers-color-scheme: dark)');
+const L=['#2b6cb0','#d9822b','#2f9e6b','#b8428c','#7e5bc4','#b89a1e','#3a9fc0','#c94a4a'];
+const D=['#5b9be0','#f0a05a','#4fc28c','#e070b4','#a488ea','#d9bd40','#62c0de','#ec7070'];
+const api={get colors(){return dark.matches?D:L},
+setLink(id){try{history.replaceState(null,'','#'+id)}catch(e){}},
+calc(name,o){calcs[name]=o},
+data(name){if(name in calcs){const o=calcs[name];try{return{status:'ok',data:o.fn(...o.inputs.map(i=>api.data(i).data))}}catch(e){return{status:'error'}}}
+ if(!(name in raw)){const s=document.getElementById('csv-'+name);raw[name]=s?d3.csvParse(s.textContent.trim()):null}
+ return raw[name]?{status:'ok',data:raw[name]}:{status:'error'}},
+draw(name,fn){draws[name]=fn},
+_run(){const go=()=>{for(const [n,fn] of Object.entries(draws))document.querySelectorAll('[data-draw="'+n+'"]').forEach(el=>{try{fn(el)}catch(e){console.error(e)}})};
+ go();let w=innerWidth,t;addEventListener('resize',()=>{if(innerWidth===w)return;w=innerWidth;clearTimeout(t);t=setTimeout(go,150)});dark.addEventListener('change',go)}};
+return api})();
+</script>
+</head><body><nav class="sa-top"><a href="./">← All charts</a></nav><main>
+<style>
+.yi-wrap{max-width:76rem;margin-inline:auto;display:flex;flex-direction:column;gap:var(--cds-gap-lg);font-family:var(--font-anthropic-sans);color:var(--color-fg)}
+.yi-head{display:flex;flex-direction:column;gap:var(--cds-gap-sm)}
+.yi-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0;text-wrap:balance}
+.yi-sub{margin:0;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.yi-take{margin:0;max-width:65ch;line-height:1.55}
+.yi-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-md);min-width:0}
+.yi-nav{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md);font-size:var(--cds-font-size-caption)}
+.yi-navlink{color:var(--color-fg-muted);text-decoration:none;border-bottom:1px solid var(--color-border-line)}
+.yi-navlink:hover,.yi-navlink:focus-visible{color:var(--color-fg)}
+.yi-sec{display:flex;flex-direction:column;gap:var(--cds-gap-md);scroll-margin-top:var(--cds-gap-lg)}
+.yi-h2{margin:0;font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium)}
+.yi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));gap:var(--cds-gap-md)}
+.yi-q{margin:0;font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);text-wrap:balance}
+.yi-chart{position:relative;min-height:17rem}
+.yi-leg{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md);font-size:var(--cds-font-size-caption);margin-bottom:var(--cds-gap-md)}
+.yi-li{display:inline-flex;align-items:center;gap:var(--cds-gap-xs)}
+.yi-sw{width:.625rem;height:.625rem;border-radius:2px;display:inline-block}
+.yi-rows{display:flex;flex-direction:column;gap:var(--cds-gap-sm)}
+.yi-row{display:flex;flex-direction:column;gap:var(--cds-gap-xs)}
+.yi-row.yi-all{padding-bottom:var(--cds-gap-sm);border-bottom:1px solid var(--color-border-line)}
+.yi-rl{display:flex;justify-content:space-between;gap:var(--cds-gap-sm);font-size:var(--cds-font-size-caption)}
+.yi-rn{color:var(--color-fg-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.yi-rname{font-weight:600}
+.yi-bar{display:flex;height:1.5rem;border-radius:var(--cds-radius);overflow:hidden;gap:1px;background:var(--color-border-line)}
+.yi-seg{display:flex;align-items:center;justify-content:center;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums;color:var(--color-bg);font-weight:600;min-width:0;overflow:hidden;white-space:nowrap;transition:opacity var(--cds-dur-slow)}
+.yi-seg.yi-muted{color:var(--color-fg)}
+.yi-dim .yi-seg:not(.yi-on){opacity:.35}
+.yi-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);white-space:nowrap;z-index:2}
+.yi-tip-k{color:var(--cds-text-secondary)}
+.yi-fail{display:flex;align-items:center;justify-content:center;gap:var(--cds-gap-xs);min-height:17rem;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.yi-dot{width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+.yi-note{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);max-width:65ch}
+[data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+</style>
+<div class="yi-wrap">
+<header class="yi-head">
+<h1 class="yi-title">Gaming views by income</h1>
+<p class="yi-sub">Yourdost parent survey · December 2020 · parents whose kids play online games</p>
+<p class="yi-take">Every question, split by income. In each chart, a bar shows how one income group answered, with all income levels together at the top for comparison. Hover over a part of a bar to see the count.</p>
+<nav class="yi-nav" aria-label="Sections"><a class="yi-navlink" href="#play">Who plays</a><a class="yi-navlink" href="#attitudes">What parents think</a><a class="yi-navlink" href="#fears">What parents fear</a><a class="yi-navlink" href="#role">The parent’s own role</a><a class="yi-navlink" href="#rules">Rules at home</a><a class="yi-navlink" href="#impact">Impact on the family</a><a class="yi-navlink" href="#about">About the respondents</a></nav>
+</header>
+<section class="yi-sec" id="play"><h2 class="yi-h2">Who plays</h2><div class="yi-grid"><article class="yi-card" id="q01"><h3 class="yi-q">Does your kid play online games?</h3><div class="yi-chart" data-draw="xt" data-q="q01" data-source="byIncome"></div></article></div></section><section class="yi-sec" id="attitudes"><h2 class="yi-h2">What parents think</h2><div class="yi-grid"><article class="yi-card" id="q03"><h3 class="yi-q">Online Gaming can be beneficial to kids</h3><div class="yi-chart" data-draw="xt" data-q="q03" data-source="byIncome"></div></article><article class="yi-card" id="q04"><h3 class="yi-q">Online Gaming is a good stress-buster</h3><div class="yi-chart" data-draw="xt" data-q="q04" data-source="byIncome"></div></article><article class="yi-card" id="q05"><h3 class="yi-q">Online Gaming is a good way for kids to socialize</h3><div class="yi-chart" data-draw="xt" data-q="q05" data-source="byIncome"></div></article><article class="yi-card" id="q06"><h3 class="yi-q">Online Gaming can be a profitable career for kids</h3><div class="yi-chart" data-draw="xt" data-q="q06" data-source="byIncome"></div></article><article class="yi-card" id="q07"><h3 class="yi-q">Online Gaming requires parental supervision</h3><div class="yi-chart" data-draw="xt" data-q="q07" data-source="byIncome"></div></article><article class="yi-card" id="q08"><h3 class="yi-q">Online Gaming can be a distraction</h3><div class="yi-chart" data-draw="xt" data-q="q08" data-source="byIncome"></div></article><article class="yi-card" id="q09"><h3 class="yi-q">Online Games are violent in nature</h3><div class="yi-chart" data-draw="xt" data-q="q09" data-source="byIncome"></div></article><article class="yi-card" id="q10"><h3 class="yi-q">Online Gaming can have dangerous consequences</h3><div class="yi-chart" data-draw="xt" data-q="q10" data-source="byIncome"></div></article><article class="yi-card" id="q11"><h3 class="yi-q">Online Gaming is a waste of money</h3><div class="yi-chart" data-draw="xt" data-q="q11" data-source="byIncome"></div></article></div></section><section class="yi-sec" id="fears"><h2 class="yi-h2">What parents fear</h2><div class="yi-grid"><article class="yi-card" id="q12"><h3 class="yi-q">Online Games can be addictive</h3><div class="yi-chart" data-draw="xt" data-q="q12" data-source="byIncome"></div></article><article class="yi-card" id="q13"><h3 class="yi-q">Online Games can cause violent/aggressive behaviour</h3><div class="yi-chart" data-draw="xt" data-q="q13" data-source="byIncome"></div></article><article class="yi-card" id="q14"><h3 class="yi-q">Online Games exposes kids to age-inappropriate content</h3><div class="yi-chart" data-draw="xt" data-q="q14" data-source="byIncome"></div></article><article class="yi-card" id="q15"><h3 class="yi-q">Online Games can affect academic performance</h3><div class="yi-chart" data-draw="xt" data-q="q15" data-source="byIncome"></div></article><article class="yi-card" id="q16"><h3 class="yi-q">Online Games can have adverse health affects</h3><div class="yi-chart" data-draw="xt" data-q="q16" data-source="byIncome"></div></article></div></section><section class="yi-sec" id="role"><h2 class="yi-h2">The parent’s own role</h2><div class="yi-grid"><article class="yi-card" id="q17"><h3 class="yi-q">I have played Online Games myself</h3><div class="yi-chart" data-draw="xt" data-q="q17" data-source="byIncome"></div></article><article class="yi-card" id="q18"><h3 class="yi-q">I know my kids&#x27; favorite Online Games</h3><div class="yi-chart" data-draw="xt" data-q="q18" data-source="byIncome"></div></article><article class="yi-card" id="q19"><h3 class="yi-q">I understand why my kids play Online Games</h3><div class="yi-chart" data-draw="xt" data-q="q19" data-source="byIncome"></div></article><article class="yi-card" id="q20"><h3 class="yi-q">I have sometimes played Online Games with my kids</h3><div class="yi-chart" data-draw="xt" data-q="q20" data-source="byIncome"></div></article><article class="yi-card" id="q21"><h3 class="yi-q">I am not interested in playing/learning about Online Games</h3><div class="yi-chart" data-draw="xt" data-q="q21" data-source="byIncome"></div></article><article class="yi-card" id="q22"><h3 class="yi-q">I think its necessary to place rules for kids&#x27; Online Gaming behaviour</h3><div class="yi-chart" data-draw="xt" data-q="q22" data-source="byIncome"></div></article></div></section><section class="yi-sec" id="rules"><h2 class="yi-h2">Rules at home</h2><div class="yi-grid"><article class="yi-card" id="q23"><h3 class="yi-q">I only allow my kid/s to play Online Games on certain days of the week</h3><div class="yi-chart" data-draw="xt" data-q="q23" data-source="byIncome"></div></article><article class="yi-card" id="q24"><h3 class="yi-q">I only allow my kid/s to play Online Games at certain times of the day</h3><div class="yi-chart" data-draw="xt" data-q="q24" data-source="byIncome"></div></article><article class="yi-card" id="q25"><h3 class="yi-q">I only allow my kid/s to play Online Games for a fixed duration of time (eg. one hour)</h3><div class="yi-chart" data-draw="xt" data-q="q25" data-source="byIncome"></div></article><article class="yi-card" id="q26"><h3 class="yi-q">I do not allow my kid/s to play Online Games during exams</h3><div class="yi-chart" data-draw="xt" data-q="q26" data-source="byIncome"></div></article><article class="yi-card" id="q27"><h3 class="yi-q">I only allow my kid/s to play certain kinds of Online Games</h3><div class="yi-chart" data-draw="xt" data-q="q27" data-source="byIncome"></div></article><article class="yi-card" id="q28"><h3 class="yi-q">I only allow my kid/s to spend a certain amount of money on Online Games</h3><div class="yi-chart" data-draw="xt" data-q="q28" data-source="byIncome"></div></article><article class="yi-card" id="q29"><h3 class="yi-q">I have no rules whatsoever</h3><div class="yi-chart" data-draw="xt" data-q="q29" data-source="byIncome"></div></article></div></section><section class="yi-sec" id="impact"><h2 class="yi-h2">Impact on the family</h2><div class="yi-grid"><article class="yi-card" id="q30"><h3 class="yi-q">Frustrations in the family due to kids&#x27; Online Gaming behavior</h3><div class="yi-chart" data-draw="xt" data-q="q30" data-source="byIncome"></div></article><article class="yi-card" id="q31"><h3 class="yi-q">Arguments/conflicts in the family due to kids&#x27; Online behavior</h3><div class="yi-chart" data-draw="xt" data-q="q31" data-source="byIncome"></div></article><article class="yi-card" id="q32"><h3 class="yi-q">Strain in parent-child relationship due to kids&#x27; Online Gaming Behavior</h3><div class="yi-chart" data-draw="xt" data-q="q32" data-source="byIncome"></div></article></div></section><section class="yi-sec" id="about"><h2 class="yi-h2">About the respondents</h2><div class="yi-grid"><article class="yi-card" id="q34"><h3 class="yi-q">Age group of kids</h3><div class="yi-chart" data-draw="xt" data-q="q34" data-source="byIncome"></div></article><article class="yi-card" id="q35"><h3 class="yi-q">Gender</h3><div class="yi-chart" data-draw="xt" data-q="q35" data-source="byIncome"></div></article><article class="yi-card" id="q36"><h3 class="yi-q">Occupation</h3><div class="yi-chart" data-draw="xt" data-q="q36" data-source="byIncome"></div></article><article class="yi-card" id="q37"><h3 class="yi-q">City</h3><div class="yi-chart" data-draw="xt" data-q="q37" data-source="byIncome"></div></article></div></section>
+<p class="yi-note">Income groups are small (12 to 23 parents each), so a difference of one or two answers moves a bar by several points. Read gaps under about 15 points with care. Rows count only parents who answered both the question and the income question; the first question only splits Yes from Sometimes, because parents who said No skipped the income question.</p>
+</div>
+<script>
+const shortInc = (s) => s.replace('Between ', '').replace(' and ', '–').replace('Less than ', 'Under ').replace('More than ', 'Over ');
+const mutedAns = (a) => a === 'Other' || a === "Don't know";
+dash.draw('xt', (el) => {
+  const d = dash.data('byIncome');
+  el.classList.toggle('dash-skeleton', d.status === 'loading');
+  el.replaceChildren();
+  if (d.status === 'error' || d.status === 'connect' || d.status === 'declined') {
+    const f = document.createElement('div'); f.className = 'yi-fail';
+    const dot = document.createElement('span'); dot.className = 'yi-dot';
+    const t = document.createElement('span'); t.textContent = 'Failed to load';
+    f.append(dot, t); el.append(f); return;
+  }
+  if (d.status !== 'ok') return;
+  const qid = el.dataset.q;
+  const rows = d.data.filter((r) => r.qid === qid).map((r) => ({...r, count: Number(r.count), ord: Number(r.ord), io: Number(r.income_ord)}));
+  if (!rows.length) return;
+  const answers = [...new Map(rows.sort((a, b) => a.ord - b.ord).map((r) => [r.answer, r.ord]))].map(([a]) => a);
+  let ci = 0;
+  const color = new Map(answers.map((a) => [a, mutedAns(a) ? 'var(--cds-chart-muted)' : dash.colors[ci++ % dash.colors.length]]));
+  const groups = d3.groups(rows.sort((a, b) => a.io - b.io), (r) => r.income).map(([inc, rs]) => ({label: shortInc(inc), full: inc, all: false, parts: answers.map((a) => ({answer: a, n: d3.sum(rs.filter((r) => r.answer === a), (r) => r.count)}))}));
+  const all = {label: 'All income levels', full: 'All income levels', all: true, parts: answers.map((a) => ({answer: a, n: d3.sum(rows.filter((r) => r.answer === a), (r) => r.count)}))};
+  const pctf = d3.format('.0%');
+  const leg = document.createElement('div'); leg.className = 'yi-leg';
+  answers.forEach((a) => {
+    const li = document.createElement('span'); li.className = 'yi-li';
+    const sw = document.createElement('span'); sw.className = 'yi-sw'; sw.style.background = color.get(a);
+    const t = document.createElement('span'); t.textContent = a;
+    li.append(sw, t); leg.append(li);
+  });
+  const list = document.createElement('div'); list.className = 'yi-rows';
+  el.append(leg, list);
+  const tip = document.createElement('div'); tip.className = 'yi-tip'; tip.hidden = true;
+  const tk = document.createElement('div'); tk.className = 'yi-tip-k'; const tv = document.createElement('div'); const tv2 = document.createElement('div');
+  tip.append(tk, tv, tv2); el.append(tip);
+  const segs = [];
+  [all, ...groups].forEach((g) => {
+    const total = d3.sum(g.parts, (p) => p.n);
+    const row = document.createElement('div'); row.className = 'yi-row' + (g.all ? ' yi-all' : '');
+    const lab = document.createElement('div'); lab.className = 'yi-rl';
+    const nm = document.createElement('span'); nm.className = 'yi-rname'; nm.textContent = g.label + (g.all ? '' : ' a year');
+    const nn = document.createElement('span'); nn.className = 'yi-rn'; nn.textContent = `${d3.format(',')(total)} parents`;
+    lab.append(nm, nn);
+    const bar = document.createElement('div'); bar.className = 'yi-bar';
+    row.append(lab, bar); list.append(row);
+    const bw = el.clientWidth || 320;
+    g.parts.forEach((p) => {
+      if (!p.n) return;
+      const s = document.createElement('div'); s.className = 'yi-seg' + (mutedAns(p.answer) ? ' yi-muted' : '');
+      const share = total ? p.n / total : 0;
+      s.style.flex = `${p.n} 1 0`; s.style.background = color.get(p.answer);
+      s.textContent = share * bw >= 34 ? pctf(share) : '';
+      s.dataset.answer = p.answer;
+      s.addEventListener('pointermove', (ev) => {
+        segs.forEach((x) => x.classList.toggle('yi-on', x.dataset.answer === p.answer));
+        list.classList.add('yi-dim');
+        tk.textContent = g.all ? g.full : `${g.full} a year`;
+        tv.textContent = p.answer;
+        tv2.textContent = `${d3.format(',')(p.n)} of ${d3.format(',')(total)} · ${pctf(share)}`;
+        tip.hidden = false;
+        const box = el.getBoundingClientRect();
+        const x = ev.clientX - box.left, y = ev.clientY - box.top;
+        tip.style.left = Math.max(0, Math.min(el.clientWidth - tip.offsetWidth, x + 12)) + 'px';
+        tip.style.top = Math.max(0, y - tip.offsetHeight - 10) + 'px';
+      });
+      s.addEventListener('pointerleave', () => { tip.hidden = true; list.classList.remove('yi-dim'); segs.forEach((x) => x.classList.remove('yi-on')); });
+      segs.push(s); bar.append(s);
+    });
+  });
+});
+document.querySelectorAll('.yi-navlink').forEach((a) => a.addEventListener('click', (ev) => {
+  const t = document.getElementById(a.getAttribute('href').slice(1));
+  if (!t) return; ev.preventDefault(); t.scrollIntoView({behavior: 'smooth'}); dash.setLink(t.id);
+}));
+</script>
+</main><script>dash._run();</script></body></html>
